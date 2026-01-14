@@ -33,40 +33,32 @@ export class UsersController {
   @Post('register')
   @UsePipes(ValidationPipe)
   async register(@Body() registerUserDto: RegisterUserDto) {
-    const existUser = await this.usersService.findByEmail(
-      registerUserDto.email,
-    );
-
-    if (existUser) throw new ConflictException('Email already here!');
-
-    const user = await this.usersService.createUser({
-      ...registerUserDto,
-      password: await hash(registerUserDto.password, await genSalt(10)),
-    });
-
-    const { password, ...newUser } = user;
-
-    return newUser;
+    // const existUser = await this.usersService.findByEmail(
+    //   registerUserDto.email,
+    // );
+    // if (existUser) throw new ConflictException('Email already here!');
+    // const user = await this.usersService.createUser({
+    //   ...registerUserDto,
+    //   password: await hash(registerUserDto.password, await genSalt(10)),
+    // });
+    // const { password, ...newUser } = user;
+    // return newUser;
   }
 
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
-    const user = await this.usersService.findByEmail(loginUserDto.email);
-
-    if (!user || !(await compare(loginUserDto.password, user.password)))
-      throw new UnauthorizedException("Email or password don't success!");
-
-    const token = this.jwtService.sign(
-      { id: user.id },
-      { secret: this.configService.get('SECRET') },
-    );
-
-    const { password, ...newUser } = user;
-
-    return {
-      ...newUser,
-      token,
-    };
+    // const user = await this.usersService.findByEmail(loginUserDto.email);
+    // if (!user || !(await compare(loginUserDto.password, user.password)))
+    //   throw new UnauthorizedException("Email or password don't success!");
+    // const token = this.jwtService.sign(
+    //   { id: user.id },
+    //   { secret: this.configService.get('SECRET') },
+    // );
+    // const { password, ...newUser } = user;
+    // return {
+    //   ...newUser,
+    //   token,
+    // };
   }
 
   @Get('logout')
